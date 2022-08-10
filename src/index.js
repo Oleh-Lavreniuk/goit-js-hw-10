@@ -1,7 +1,8 @@
 import './css/styles.css';
 
 import { fetchCountries } from './js/fetchCountries';
-import { renderCountriesList, createCountryInfo } from './js/createMarkup';
+import { renderCountriesList } from './js/createMarkup';
+import { createCountryInfo } from './js/createMarkup';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import debounce from 'lodash.debounce';
@@ -22,6 +23,8 @@ refs.inputCountry.addEventListener(
 function onSearchCountries(ev) {
   const value = ev.target.value.trim();
   if (!value) {
+    refs.countryList.innerHTML = '';
+    refs.countryInfo.innerHTML = '';
     return;
   }
 
@@ -37,9 +40,19 @@ function onSearchCountries(ev) {
       }
       if (data.length === 1) {
         refs.countryList.innerHTML = '';
-        refs.countryInfo.innerHTML = createCountryInfo(data[0]);
+        refs.countryList.insertAdjacentHTML(
+          'beforeend',
+          renderCountriesList(data)
+        );
+        refs.countryInfo.insertAdjacentHTML(
+          'beforeend',
+          createCountryInfo(data)
+        );
       }
-      console.log('data: ', data);
+      console.log('CountriesList: ', renderCountriesList(data));
+      console.log('CountryInfo: ', createCountryInfo(data));
     })
-    .catch(error => Notify.failure('Oops, there is no country with that name'));
+    .catch(error => {
+      Notify.failure('Oops, there is no country with that name');
+    });
 }

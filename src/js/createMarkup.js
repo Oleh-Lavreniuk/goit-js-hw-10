@@ -1,9 +1,9 @@
-function createCountryList(acc, country) {
+function createCountryList(acc, { name, flags }) {
   return (
     acc +
-    `<li>
-      <img src="${country.flags.svg}" alt="${country.name.official}" width="50" />
-      <h2>${country.name.common}</h2>
+    `<li class="country-list__item">
+      <img class="country-list__flag" src="${flags.svg}" alt="${name.official}" width="50" />
+      <h2 class="country-list__name">${name.common}</h2>
     </li>`
   );
 }
@@ -13,12 +13,19 @@ export function renderCountriesList(array) {
 }
 
 export function createCountryInfo(country) {
-  const lang = country.languages.map(language => language.name).join();
+  return country
+    .map(({ capital, population, languages }) => {
+      // const { capital, population, languages } = country;
+      const lang = Object.values(languages).join(', ');
+      // const lang = languages.map(language => language.name).join(', ');
 
-  return `<img src="${country.flags.svg}" 
-      alt="${country.name.official}" width="50" />
-    <h2>${country.name.common}</h2>
-    <p><b>Capital</b>: ${country.capital[0]}</p>
-    <p><b>Population</b>: ${country.population}</p>
-    <p><b>Languages</b>: ${lang}</p>`;
+      return `    
+        <ul class="country-info__list">
+          <li class="country-info__item"><b>Capital:</b> ${capital}</li>
+          <li class="country-info__item"><b>Population:</b> ${population}</li>
+          <li class="country-info__item"><b>Languages:</b> ${lang}</li>
+        </ul>
+        `;
+    })
+    .join('');
 }

@@ -12,7 +12,7 @@ const DEBOUNCE_DELAY = 300;
 const refs = {
   inputCountry: document.querySelector('#search-box'),
   countryList: document.querySelector('.country-list'),
-  countryInfo: document.querySelector('#search-box'),
+  countryInfo: document.querySelector('.country-info'),
 };
 
 refs.inputCountry.addEventListener(
@@ -30,6 +30,9 @@ function onSearchCountries(ev) {
 
   fetchCountries(value)
     .then(data => {
+      refs.countryList.innerHTML = '';
+      refs.countryInfo.innerHTML = '';
+
       if (data.length > 10) {
         Notify.info(
           'Too many matches found. Please enter a more specific name.'

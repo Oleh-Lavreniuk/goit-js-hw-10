@@ -2,7 +2,7 @@ function createCountryList(acc, { name, flags }) {
   return (
     acc +
     `<li class="country-list__item">
-      <img class="country-list__flag" src="${flags.svg}" alt="${name.official}" width="50" />
+      <img class="country-list__flag" src="${flags.svg}" alt="${name.official}" width="25" />
       <h2 class="country-list__name">${name.common}</h2>
     </li>`
   );
@@ -22,7 +22,7 @@ export function createCountryInfo(country) {
       return `    
         <ul class="country-info__list">
           <li class="country-info__item"><b>Capital:</b> ${capital}</li>
-          <li class="country-info__item"><b>Population:</b> ${population}</li>
+          <li class="country-info__item"><b>Population:</b> ${population.toLocaleString()}</li>
           <li class="country-info__item"><b>Languages:</b> ${lang}</li>
         </ul>
         `;
